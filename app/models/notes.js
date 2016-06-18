@@ -6,7 +6,7 @@ module.exports = function (server) {
     const 
         harvesterPlugin = server.plugins['hapi-harvester'],
         schema = {
-            type: 'notes',
+            type: 'nodes',
             attributes: {
                 title: Types.string(),
                 text: Types.string().required()
