@@ -4,8 +4,19 @@ module.exports = function () {
         chai = require('chai'),
         expect = chai.expect;
         
-    this.Given(/^an existing order with a (.*) status$/, function (status) {
-        const 
+         const payload = {
+        data: {
+            type: 'orders',
+            attributes: {
+                status: 'new',         
+                items: [{ product_id: '1e7aaa03-a093-4fce-9367-ab20c1daf265', quantity: 2}]
+                }
+            }
+    };
+        
+        this.Given(/^an existing order with a (.*) status$/, function (status) {
+        const  that = this;
+       /*const 
             that = this,
             payload = {
             data: {
@@ -16,8 +27,10 @@ module.exports = function () {
                     }
                 }
             }
+    */    
         
-
+        payload.data.attributes.status = status;
+        
         return this.doHttpRequest('orders', 'post', payload)
         .then((response) => {
             that.existingOrder = response.body;
@@ -45,12 +58,6 @@ module.exports = function () {
     });
     
     
-   
-   
-   
-   
-   
-   
     this.Given(/^a valid order$/, function () {
         const 
             that = this,
@@ -72,4 +79,24 @@ module.exports = function () {
     });
     
     
+    
+     this.When(/^I submit it to the API$/, function () {
+        const that = this;
+        
+        return this.doHttpRequest('orders', 'post', payload)
+        .then((response) => {
+            that.newOrderId = response.body.data.id;
+            that.successMessage = response.statusCode;
+            return response;
+        });
+    });
+    
+     this.Then(/^I receive a success message$/, function () {
+        
+        expect(this.response.statusCode).to.equal(201);
+   });
+   
+      this.Then(/^the new order id$/, function () {
+        expect(this.newOrderId).not.to.be.undefined;
+    });
 }
