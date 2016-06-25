@@ -2,9 +2,11 @@ services: mongodb
 language: node_js
 node_js:
   - "5.11"
+
 addons:
     code_climate:
-        repo_token: 11ab015eadfda145daff4dddeef88e8ff19afd9b8e2a32827680541b8b663381
+        repo_token: a5a45b680accbcfdb426fe83d1ee0a017859bb6bd894788f39649331ba747797
+
 after_script:
   - npm install -g codeclimate-test-reporter
   - codeclimate-test-reporter < coverage/lcov.info
