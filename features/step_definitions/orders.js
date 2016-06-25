@@ -93,8 +93,8 @@ module.exports = function () {
     });
     
      this.Then(/^I receive a success message$/, function () {
-           console.info('Status Code ' )
-          expect(this.response.statusCode).to.equal(201);
+
+              expect(this.successMessage).to.equal(201);
    });
    
       this.Then(/^the new order id$/, function () {
