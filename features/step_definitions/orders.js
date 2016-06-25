@@ -57,6 +57,7 @@ module.exports = function () {
         expect(this.responseBody.data.attributes.status).to.equal(status);
     });
     
+   
     
     this.Given(/^a valid order$/, function () {
         const 
@@ -92,8 +93,8 @@ module.exports = function () {
     });
     
      this.Then(/^I receive a success message$/, function () {
-        
-        expect(this.response.statusCode).to.equal(201);
+           console.info('Status Code ' )
+          expect(this.response.statusCode).to.equal(201);
    });
    
       this.Then(/^the new order id$/, function () {
