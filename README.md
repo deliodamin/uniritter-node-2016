@@ -6,4 +6,4 @@
 
 
 
-Sample code for the node.js-based web engineering classes at UniRitter.
+Sample code for the node.js-based web engineering classes at UniRitter 2016.
