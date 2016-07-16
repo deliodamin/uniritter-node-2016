@@ -6,6 +6,7 @@ const
     eh = require('../utils/eventhandling'),
     _ = require('lodash');
 
+
 module.exports = function (server) {
     const 
         harvesterPlugin = server.plugins['hapi-harvester'],
