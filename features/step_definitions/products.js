@@ -19,4 +19,25 @@ module.exports = function () {
        this.Given(/^a valid product/, function () {
         return payload;
     });
+    
+    this.When(/^ I submit it to the APIB$/, function () {
+        const that = this
+        
+        return this.doHttpRequest('products' , 'post', payload)
+        .then((response) => {
+            that.validProductID = response.body.data.id;
+            that.statusProduct = response.statusCode;
+            return response;
+        });
+    });
+    
+    
+     this.Then(/^I receive a success messageB$/, function () {
+        expect(this.statusProduct).to.equal(201);
+    });
+    
+     this.Then(/^the new product id$/, function () {
+        expect(this.validProductID).not.to.be.undefined;
+   });
+    
 }
