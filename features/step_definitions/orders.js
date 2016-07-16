@@ -3,34 +3,20 @@ module.exports = function () {
         _ = require('lodash'),
         chai = require('chai'),
         expect = chai.expect;
-        
-         const payload = {
-        data: {
-            type: 'orders',
-            attributes: {
-                status: 'new',         
-                items: [{ product_id: '1e7aaa03-a093-4fce-9367-ab20c1daf265', quantity: 2}]
-                }
-            }
-    };
-        
-        this.Given(/^an existing order with a (.*) status$/, function (status) {
-        const  that = this;
-       /*const 
+
+    this.Given(/^an existing order with a new status$/, function () {
+        const 
             that = this,
             payload = {
             data: {
                 type: 'orders',
                 attributes: {
-                    status: status,
                     items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 1}]
                     }
                 }
             }
-    */    
         
-        payload.data.attributes.status = status;
-        
+
         return this.doHttpRequest('orders', 'post', payload)
         .then((response) => {
             that.existingOrder = response.body;
@@ -57,47 +43,8 @@ module.exports = function () {
         expect(this.responseBody.data.attributes.status).to.equal(status);
     });
     
-   
-    
-    this.Given(/^a valid order$/, function () {
-        const 
-            that = this,
-            payload = {
-            data: {
-                type: 'orders',
-                attributes: {
-                    items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 1}]
-                    }
-                }
-            }
-        
-
-        return this.doHttpRequest('orders', 'post', payload)
-        .then((response) => {
-            that.existingOrder = response.body;
-            return response;
-        });
+    this.Then(/^wait a few seconds$/, function (callback) {
+        setTimeout(callback, 3000);
     });
     
-    
-    
-     this.When(/^I submit it to the API$/, function () {
-        const that = this;
-        
-        return this.doHttpRequest('orders', 'post', payload)
-        .then((response) => {
-            that.newOrderId = response.body.data.id;
-            that.successMessage = response.statusCode;
-            return response;
-        });
-    });
-    
-     this.Then(/^I receive a success message$/, function () {
-
-              expect(this.successMessage).to.equal(201);
-   });
-   
-      this.Then(/^the new order id$/, function () {
-        expect(this.newOrderId).not.to.be.undefined;
-    });
 }
